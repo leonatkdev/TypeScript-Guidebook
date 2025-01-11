@@ -2,9 +2,7 @@
 
 This repository provides a beginner-friendly cheatsheet for TypeScript, including examples of commonly used features and concepts. It aims to help developers understand TypeScript syntax and improve their coding practices.
 
-
-[TypeScript Playground Link]("https://www.typescriptlang.org/play/?#code/PTAEHUFMBsGMHsC2lQBd5oBYoCoE8AHSAZVgCcBLA1UABWgEM8BzM+AVwDsATAGiwoBnUENANQAd0gAjQRVSQAUCEmYKsTKGYUAbpGF4OY0BoadYKdJMoL+gzAzIoz3UNEiPOofEVKVqAHSKymAAmkYI7NCuqGqcANag8ABmIjQUXrFOKBJMggBcISGgoAC0oACCbvCwDKgU8JkY7p7ehCTkVDQS2E6gnPCxGcwmZqDSTgzxxWWVoASMFmgYkAAeRJTInN3ymj4d-jSCeNsMq-wuoPaOltigAKoASgAywhK7SbGQZIIz5VWCFzSeCrZagNYbChbHaxUDcCjJZLfSDbExIAgUdxkUBIursJzCFJtXydajBBCcQQ0MwAUVWDEQC0gADVHBQGNJ3PkrqhKJwRgBeUAAIgAEjBoBhwPAyNFhYoKYJ4O4ApLmAAKWn0xnuVmUDnuACUwRUOGaHjIXkQMucwPYNC+bjMzHYDGYkH4sGg6kSHPgehEXmFdIZTMEwqS2OF4AcqAA5MIAHKQCTCoIqADyXzI70EHq0kCOqEcClc0jwoCc1p0wyw+hQCEQ0OEl0dEhl0REBg42IWTFYHB4QRKQA")
-
+[TypeScript Playground Link](https://www.typescriptlang.org/play)
 
 ## Table of Contents
 
@@ -27,17 +25,36 @@ This repository provides a beginner-friendly cheatsheet for TypeScript, includin
      - [bigint](#bigint)
 4. [Complex Types](#complex-types)
    - [Arrays](#arrays)
+     - [Array of Objects](#array-of-objects)
+     - [Mixed-Type Arrays](#mixed-type-arrays)
+     - [Multidimensional Arrays](#multidimensional-arrays)
+     - [Array of Functions](#array-of-functions)
    - [Tuples](#tuples)
    - [Sets](#sets)
    - [Maps](#maps)
 5. [Functions](#functions)
    - [Function Types](#function-types)
    - [Arrow Functions](#arrow-functions)
+   - [React Components](#arrow-functions)
+   - [Class Components](#arrow-functions)
 6. [Interfaces](#interfaces)
-7. [Union Types](#union-types)
-8. [Optional Arguments](#optional-arguments)
-   - [Default Parameters](#default-parameters)
-   - [Rest Parameters](#rest-parameters)
+7. [Type](#Type)
+8. [Interface or Type](#interface-or-type)
+9. [Union Types](#union-types)
+10. [Optional Arguments](#optional-arguments)
+    - [Default Parameters](#default-parameters)
+    - [Rest Parameters](#rest-parameters)
+11. [React JS Typescript](#react-component)
+    - [React.FC](#react-fc)
+    - [Props Without React.FC](#props-without-react-fc)
+    - [React.ComponentType](#react-componenttype)
+    - [React.PureComponent](#react-purecomponent)
+    - [React.ElementType](#react-elementtype)
+    - [React.HTMLAttributes<T>](#react-htmlattributes)
+    - [React.ComponentProps<T>](#react-componentprops)
+    - [React.PropsWithChildren<T>](#react-propswithchildren)
+    - [React.PropsWithRef<T>](#react-propswithref)
+12.  [React Typescript Table](#react-typescript-table)
 
 <br>
 
@@ -294,6 +311,56 @@ You can define arrays using `type[]` or `Array<type>` syntax.
 
 ---
 
+### Array of Objects
+
+```typescript
+interface Person {
+  name: string;
+  age: number;
+}
+
+const people: Person[] = [
+  { name: "Leo", age: 25 },
+  { name: "Anna", age: 30 },
+];
+console.log("people =", people);
+```
+
+Here, we define an array of objects where each object adheres to the Person interface.
+
+### Mixed-Type Arrays
+
+```typescript
+const mixed: (string | number)[] = [42, "Hello", 99, "TypeScript"];
+console.log("mixed =", mixed);
+```
+
+An array can hold multiple types if specified with a union type.
+
+### Multidimensional Arrays
+
+```typescript
+const matrix: number[][] = [
+  [1, 2, 3],
+  [4, 5, 6],
+];
+console.log("matrix =", matrix);
+```
+
+A multidimensional array (e.g., 2D array) is declared using multiple [].
+
+### Array of Functions
+
+```typescript
+const operations: ((a: number, b: number) => number)[] = [
+  (a, b) => a + b,
+  (a, b) => a - b,
+];
+console.log("operations[0](10, 5) =", operations[0](10, 5)); // 15
+```
+
+You can store functions in arrays by defining their signature.
+
 ### Tuples
 
 ```typescript
@@ -397,7 +464,7 @@ interface IUser {
 let me: IUser = { firstName: "Leo", lastName: "Kras" };
 ```
 
-### Optional Properties
+### Optional Properties Interfaces
 
 ```typescript
 interface IUser2 {
@@ -415,6 +482,58 @@ Optional properties are denoted by `?`.
 ---
 
 <br>
+
+## Type
+
+`type` is a way to define custom types, similar to interfaces. It can represent primitives, objects, functions, unions, and more
+```typescript
+type User = {
+  firstName: string;
+  lastName: string;
+};
+
+let me: User = { firstName: "Leo", lastName: "Kras" };
+console.log("User:", me);
+```
+
+
+## Interface or Type
+
+| **Feature**             | **interface**                                       | **type**                                                                |
+| ----------------------- | --------------------------------------------------- | ----------------------------------------------------------------------- |
+| **Declaration Merging** | ✅ Can merge multiple declarations.                 | ❌ Cannot merge; redeclaring a type with the same name causes an error. |
+| **Extending**           | ✅ Can extend other interfaces or types.            | ✅ Can combine types using & (intersection)                             |
+| **Union Types**         | ❌ Not supported.                                   | ✅ Can define union types. Example: `type Status = "success"            |
+| **Primitive Alias**     | ❌ Cannot define primitive or complex aliases.      | ✅ Can alias primitives. Example: `type ID = number                     |
+| **Primitive Alias**     | ❌ Limited to defining objects, arrays, or classes. | ✅ Can define tuples, unions, intersections, etc                        |
+| **Use in Classes**      | ✅ Can implement interfaces in classes.             | ❌ Cannot be directly implemented by classes                            |
+
+### When to Use `interface`
+
+Use interface when defining the shape of objects or for class contracts.
+Ideal if you need declaration merging or want to extend an existing structure.
+
+```typescript
+interface User {
+  name: string;
+}
+interface User {
+  age: number;
+}
+// Merged into:
+const user: User = { name: "Alice", age: 25 };
+```
+
+### When to Use `type`
+
+Use type for more complex types like unions, intersections, or aliases of primitives.
+Ideal when working with more advanced TypeScript features.
+
+```typescript
+type Status = "success" | "error" | "loading";
+type Coordinates = [number, number];
+type UserOrEmployee = User | Employee;
+```
 
 ## Union Types
 
@@ -450,5 +569,158 @@ greet("John", "Doe"); // "John Doe"
 Optional parameters are indicated by `?` or by providing a default value.
 
 ---
+
+## React Component
+
+### React FC
+- React.FC (or React.FunctionComponent) is used to type functional components.
+- It automatically provides children as a prop.
+- Not always recommended because of some limitations (e.g., strict typing for children).
+
+```typescript
+import React from "react";
+
+interface ButtonProps {
+  label: string;
+}
+
+const Button: React.FC<ButtonProps> = ({ label }) => {
+  return <button>{label}</button>;
+};
+```
+
+
+### Props Without React FC
+- Using just a function and typing the props explicitly is often preferred:
+- JSX.Element ensures the component returns valid JSX.
+- Does not automatically include children.
+
+```typescript
+interface ButtonProps {
+  label: string;
+}
+
+const Button = ({ label }: ButtonProps): JSX.Element => {
+  return <button>{label}</button>;
+};
+```
+
+### React ComponentType
+- Represents either a React.FC (functional component) or React.Component (class component).
+- Useful for higher-order components (HOCs)
+
+
+```typescript
+type WithAuth = React.ComponentType<{ isAuthenticated: boolean }>;
+
+const AuthComponent: WithAuth = ({ isAuthenticated }) => {
+  return isAuthenticated ? <div>Welcome!</div> : <div>Please login</div>;
+};
+```
+
+### React PureComponent
+- For class components with shallow prop and state comparison.
+
+```typescript
+import React, { PureComponent } from "react";
+
+interface ButtonProps {
+  label: string;
+}
+
+class Button extends PureComponent<ButtonProps> {
+  render() {
+    return <button>{this.props.label}</button>;
+  }
+}
+```
+
+### React ElementType
+- Used when you want to allow any type of React component (function, class, or string like div)
+
+```typescript
+import React from "react";
+
+interface WrapperProps {
+  as?: React.ElementType;
+}
+
+const Wrapper: React.FC<WrapperProps> = ({ as: Component = "div", children }) => {
+  return <Component>{children}</Component>;
+};
+```
+
+
+### React HTMLAttributes
+- For components rendering HTML elements (e.g., div, input).
+
+```typescript
+interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
+  label: string;
+}
+
+const Input: React.FC<InputProps> = ({ label, ...rest }) => {
+  return (
+    <label>
+      {label}
+      <input {...rest} />
+    </label>
+  );
+};
+```
+
+### React ComponentProps
+- Extracts the props of another component.
+
+```typescript
+type ButtonProps = React.ComponentProps<"button">;
+
+const CustomButton: React.FC<ButtonProps> = (props) => {
+  return <button {...props} />;
+};
+```
+
+
+### React PropsWithChildren
+- Adds children to a props type
+
+```typescript
+interface CardProps {
+  title: string;
+}
+
+const Card: React.FC<React.PropsWithChildren<CardProps>> = ({ title, children }) => {
+  return (
+    <div>
+      <h2>{title}</h2>
+      {children}
+    </div>
+  );
+};
+```
+
+### React PropsWithRef
+- Adds a ref to a component's props.
+
+```typescript
+interface InputProps {
+  value: string;
+}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({ value }, ref) => {
+  return <input ref={ref} value={value} />;
+});
+```
+
+## React Typescript Table
+
+| **Type**                         | **Use Case**                                                  |
+| -------------------------------- | ------------------------------------------------------------- |
+| **React.FC**                     | Typing functional components (includes children by default).  |
+| Explicit Props + **JSX.Element** | Preferred way to type functional components (manual control). |
+| **React.ComponentType**          | Typing HOCs or when a component can be functional or class.   |
+| **React.ElementType**            | Dynamic component type (e.g., as prop).                       |
+| **React.HTMLAttributes<T>**      | Typing components wrapping HTML elements.                     |
+| **React.ComponentProps<T>**      | Reusing props of another component.                           |
 
 Feel free to extend this cheatsheet with more examples and advanced TypeScript features!
