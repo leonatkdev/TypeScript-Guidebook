@@ -30,6 +30,13 @@ function handleFunc(age: number) {
   // age needs to be a number or will throw error
 }
 
+// Functions Arguments with default value
+function handleFuncDefault(age: number = 1): number {
+  // console.log("age = ", age);
+  return age;
+  // age needs to be a number or will throw error
+}
+
 // What the Function will return
 function handleFuncReturn(age: number): any {
   if (age !== undefined) {
@@ -86,3 +93,16 @@ me2.age = 21;
 let ambiguous: string | number;
 ambiguous = "Not any more";
 ambiguous = 21;
+
+// Optional arguments
+
+let add = function (x: number, y: number, z: number = 0): number {
+  return x + y + z;
+};
+add(1, 2); // 3
+add(10, 10, 10); //30
+
+let greet = function (firstName: string, lastName?: string): string {
+  if (lastName) return firstName + " " + lastName;
+  else return firstName;
+};
